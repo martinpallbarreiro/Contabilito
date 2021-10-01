@@ -7,6 +7,28 @@
 </head>
 <body>
     <center><h1>Contabilito</h1></center>
-    <label>Nombre: <input name="name" id="txtName" /></label>
+    <h2>Ingrese los datos:</h2>
+    <label>Descripción: <input name="desc" id="txtDesc" placeholder="Descripción de la compra"/></label>
+    <br>
+    <br>
+    <label>Tipo de transaccion 
+        <input name="trans" id="optCompra" type="radio"/>Compra
+        <input name="trans" id="optVenta" type="radio"/>Venta
+    </label>
+    <br>
+    <br>
+    <label for="">Tipo IVA
+        <input type="radio" name="iva" id="optBasico">Básico
+        <input type="radio" name="iva" id="optMinimo">Minimo
+        <input type="radio" name="iva" id="optExento">Exento
+    </label>
+    <br>
+    <br>
+    <label for="">Subtotal($)
+        <input  name="" id="monto" placeholder="Ingrese el monto">
+    </label>
+    <input type="button" value="Ingresar" id="btnSave" />
+
+
 </body>
 </html>
