@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos.css">
     <title>Contabilito</title>
 </head>
 <body>
@@ -11,13 +12,13 @@
     <label>Descripción: <input name="desc" id="txtDesc" placeholder="Descripción de la compra"/></label>
     <br>
     <br>
-    <label>Tipo de transaccion 
+    <label id="tipoTrans">Tipo de transaccion 
         <input name="trans" id="optCompra" type="radio"/>Compra
         <input name="trans" id="optVenta" type="radio"/>Venta
     </label>
     <br>
     <br>
-    <label for="">Tipo IVA
+    <label for="" id="tipoIVA">Tipo IVA
         <input type="radio" name="iva" id="optBasico">Básico
         <input type="radio" name="iva" id="optMinimo">Minimo
         <input type="radio" name="iva" id="optExento">Exento
@@ -28,6 +29,18 @@
         <input  name="" id="monto" placeholder="Ingrese el monto">
     </label>
     <input type="button" value="Ingresar" id="btnSave" />
+    <table>
+        <thead>
+          <tr>
+            <th>Descripción</th>
+            <th>Tipo</th>
+            <th>Subtotal($)</th>
+            <th>IVA($)</th>
+            <th>Total(IVA inc)</th>
+          </tr>
+        </thead>
+        <tbody id="info"></tbody>
+      </table>
 
 
 </body>
