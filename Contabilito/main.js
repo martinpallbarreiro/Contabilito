@@ -1,42 +1,92 @@
-const arr = [];
+const roundNumber = (num) => Math.round(num*100)/100;
 
-const buttonSave = () => {
-  const tbody = document.getElementById("info");
-  const txtDesc = document.getElementById("txtDesc");
-  const radioTrans = document.getElementById("tipoTrans");
-  const radioIVA = document.getElementById("tipoIVA");
-  const txtMonto = document.getElementById("monto");
-  
-  const Descripcion = txtDesc.value;
-  const Transaccion = radioTrans.value;
-  const IVA = radioIVA.value;
-  const Monto = txtMonto.value;
+let dataArray;
+let venta_total=0;
+let compra_total=0;
 
-  if (Descripcion && Transaccion && IVA && Monto) {
-    tbody.innerHTML += `<tr><td>${Descripcion}</td><td>${Transaccion}</td><td>${Monto}</td> </tr>`;
-    txtDesc.value = "";
-    txtMonto.value = "";
-    arr.push({
-      Descripcion,
-      Monto,
-    });
-  } else {
-    alert("Falta algun dato");
-  }
+const appendTransactionToTable = ({
+    description,
+    transaction,
+    subtotal,
+    iva,
+}) => {
+    
+    const tbody = document.querySelector("tbody");
+    const transactionStr = transaction ==="C" ? "Compra" : "Venta"; //if acortado
+    const ivaValue = roundNumber((iva/100)*subtotal);
+    const total = ivaValue + subtotal;
+    if(transaction === "C"){
+        compra_total += total;
+    }else{
+        venta_total += total;
+    }
+    document.getElementById("compraTotal").innerHTML= compra_total;
+    document.getElementById("ventaTotal").innerHTML= venta_total;
+    tbody.innerHTML += `
+    <tr>
+        <td>${description}</td>
+        <td>${transactionStr}</td>
+        <td>${subtotal}</td>
+        <td>${ivaValue}</td>
+        <td>${total}</td>
+
+    </tr>  
+    ` 
 };
 
-const showData = (array) => {
-    const tbody = document.getElementById("info");
-    for (let data of array) {
-      tbody.innerHTML += `<tr><td>${data.name}</td><td>${data.lastname}</td></tr>`;
+
+document.addEventListener("DOMContentLoaded",() =>{
+    
+    dataArray = JSON.parse(localStorage.getItem("data"));
+    if(!dataArray){
+        dataArray=[];
     }
-  };
 
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("btnSave").addEventListener("click", buttonSave);
-    showData(JSON.parse(localStorage.getItem("DATA")));
+    dataArray.forEach((transaction) => {
+        appendTransactionToTable(transaction);
+    });
+    document.getElementById("formularioVentas").addEventListener("submit",(e) =>{        
+        e.preventDefault();//para que no se recargue la página
+        const data = new FormData(e.target); // etarget es el elemento que disparo el evento submit
+        const description = data.get("desc");
+         const transaction = data.get("trans");
+         const subtotal = roundNumber(data.get("subtotal"));
+         //todos los datos obtenidos del formulario vienen en formato string
+         //el .toFixed es para limitar los decimales permitidos
+         const iva = roundNumber(+data.get("iva")); 
+        // //el simbolo de + parsea igual que con parseFloat       
+        
+        
+        dataArray.push({
+            description,
+            transaction,
+            subtotal,
+            iva,
+        });
 
-  });
-  
-  
-  
+        localStorage.setItem("data", JSON.stringify(dataArray));
+        appendTransactionToTable({
+            description,
+            transaction,
+            subtotal,
+            iva,  
+        })
+        
+        
+        
+        
+        //tbody.innerHTML+= 
+        // `
+        //     <tr>
+        //         <td>${description}</td>
+        //         <td>${transactionStr}</td>
+        //         <td>${subtotal}</td>
+        //         <td>${iva}</td>
+        //         <td>${total}</td>
+
+        //     </tr>  
+        // ` 
+            
+        
+    });  
+});

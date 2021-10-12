@@ -3,45 +3,108 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="estilos.css">
+    <script src="main.js"></script>
     <title>Contabilito</title>
 </head>
 <body>
     <center><h1>Contabilito</h1></center>
     <h2>Ingrese los datos:</h2>
-    <label>Descripción: <input name="desc" id="txtDesc" placeholder="Descripción de la compra"/></label>
-    <br>
-    <br>
-    <label id="tipoTrans">Tipo de transaccion 
-        <input name="trans" id="optCompra" type="radio"/>Compra
-        <input name="trans" id="optVenta" type="radio"/>Venta
-    </label>
-    <br>
-    <br>
-    <label for="" id="tipoIVA">Tipo IVA
-        <input type="radio" name="iva" id="optBasico">Básico
-        <input type="radio" name="iva" id="optMinimo">Minimo
-        <input type="radio" name="iva" id="optExento">Exento
-    </label>
-    <br>
-    <br>
-    <label for="">Subtotal($)
-        <input  name="" id="monto" placeholder="Ingrese el monto">
-    </label>
-    <input type="button" value="Ingresar" id="btnSave" />
+    <form id="formularioVentas">        
+        <div class="row">
+            <label>
+                Descripción: 
+                <input
+                    type="text" 
+                    name="desc" 
+                    id="desc" 
+                    placeholder="Descripción de la compra"
+                />
+            </label>
+        </div>
+
+        <div class="row">
+            Tipo de transacción: 
+            <label>                
+                <input 
+                    name="trans" 
+                    id="optCompra" 
+                    type="radio"
+                    checked
+                    value="C"
+                />
+                Compra
+            </label>
+            <label>
+                <input 
+                    type="radio"
+                    name="trans"
+                    id="optVenta"
+                    value="V"
+                />
+                Venta               
+            </label>
+        </div>
+
+        <div class="row">
+            Tipo de IVA:
+            <label>
+                <input 
+                    type="radio" 
+                    name="iva" 
+                    id="ivaBasica"
+                    checked
+                    value="22"
+                />
+                Básico
+            </label>
+            <label>
+                <input 
+                    type="radio" 
+                    name="iva" 
+                    id="ivaMinimo"
+                    value="10"
+                />
+                Minimo
+            </label>
+            <label>
+                <input 
+                    type="radio" 
+                    name="iva" 
+                    id="ivaExento" 
+                    value="0"
+                />
+                Exento
+            </label>
+        </div>
+        
+        <div class="row">
+            <label>
+                Subtotal ($):
+                <input 
+                    type="number"
+                    step="0.01" 
+                    name="subtotal" 
+                    id="subtotal"
+                    required
+                />
+            </label>
+            <input type="submit" id="submit" value="Ingresar">
+        </div>
+    </form>
+
     <table>
         <thead>
-          <tr>
-            <th>Descripción</th>
-            <th>Tipo</th>
-            <th>Subtotal($)</th>
-            <th>IVA($)</th>
-            <th>Total(IVA inc)</th>
-          </tr>
+            <tr>
+                <th>Descripción</th>
+                <th>Tipo</th>
+                <th>Subtotal ($)</th>
+                <th>IVA ($)</th>
+                <th>Total (IVA inc)</th>
+            </tr>
         </thead>
-        <tbody id="info"></tbody>
-      </table>
-
-
+        <tbody id="data"></tbody>
+    </table>
+    <p>Total Ventas: $ <span id="ventaTotal"></span></p>
+    <p>Total Compras: $ <span id="compraTotal"></span></p>    
 </body>
 </html>
